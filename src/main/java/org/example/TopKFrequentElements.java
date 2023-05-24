@@ -11,50 +11,29 @@ public class TopKFrequentElements {
     }
 
     public int[] topKFrequent(int[] nums, int k) {
-        HashMap<Integer, Integer> map = new HashMap<>(nums.length);
+        HashMap<Integer, Integer> frequencyMap = new HashMap();
         for (int i = 0; i < nums.length; i++) {
-            if(!map.containsKey(nums[i]))
-                map.put(nums[i], 1);
-            else
-                map.merge(nums[i], 1, Integer::sum);
+            frequencyMap.merge(nums[i], 1, Integer::sum);
         }
-
-        List<Integer> array[] = new ArrayList[nums.length + 1];
-
-        for(Map.Entry<Integer, Integer> set : map.entrySet()){
-            if(array[set.getValue()] == null)
-                array[set.getValue()] = new ArrayList<>();
-            array[set.getValue()].add(set.getKey());
+        List<Integer>[] freqArray = new ArrayList[nums.length + 1];
+        for(Map.Entry<Integer, Integer> set : frequencyMap.entrySet()){
+            int frequency = set.getValue();
+            int num = set.getKey();
+            if(freqArray[frequency] == null)
+                freqArray[frequency] = new ArrayList<>();
+            freqArray[frequency].add(num);
         }
+        int index = 0;
         int[] result = new int[k];
-        int size = 0;
-        for (int i = nums.length; i > 0; i--) {
-            if(array[i] != null)
-                for (int num: array[i]){
-                    result[size++] = num;
-                    if(size == k)
+        for(int i = nums.length - 1; i >= 0; i--){
+            if(freqArray[i] != null)
+                for(int value : freqArray[i]){
+                    result[index++] = value;
+                    if(index == k)
                         return result;
-                }
 
+                }
         }
         return result;
-//        PriorityQueue<Map.Entry<Integer, Integer>> minQueue = new PriorityQueue<>(k, (s1, s2) -> s1.getValue() - s2.getValue());
-//        int size = 0;
-//        for(Map.Entry<Integer, Integer> set : map.entrySet()){
-//            if(size < k){
-//                size++;
-//                minQueue.add(set);
-//            }else if(set.getValue() >= minQueue.peek().getValue()){
-//                minQueue.poll();
-//                minQueue.add(set);
-//            }
-//
-//        }
-//        int[] result = new int[k];
-//        int i = 0;
-//        while(!minQueue.isEmpty()){
-//            result[i++] = minQueue.poll().getKey();
-//        }
-//        return result;
     }
 }

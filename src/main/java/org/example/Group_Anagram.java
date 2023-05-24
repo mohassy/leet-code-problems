@@ -18,11 +18,11 @@ public class Group_Anagram {
                 hash[c - 'a']++;
             }
             // make key hash-map-friendly
-            String key = Arrays.toString(hash);
+            String key = Arrays.toString(hash); // what the fuck
             if (!map.containsKey(key)) {
-                map.put(key, new ArrayList<>());
+                map.put(key, new ArrayList<>()); // what the fuck
             }
-            map.get(key).add(word);
+            map.get(key).add(word); // what the fuck
         }
         return new ArrayList<>(map.values());
     }
