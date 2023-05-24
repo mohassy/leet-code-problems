@@ -1,5 +1,4 @@
 package org.example;
-//comment
 public class TrappingRainWater {
     public int trap(int[] height) {
         int maxLeft, maxRight, ans;
